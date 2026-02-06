@@ -8,8 +8,8 @@ import "../style/index.css";
         includeCover: true, // if includeCover is true the algorithm should show the cover image
         background: "https://images.unsplash.com/photo-1511974035430-5de47d3b95da", // this is the image's url that will be used as a background for the profile cover
         avatarURL: "https://randomuser.me/api/portraits/women/42.jpg", // this is the url for the profile avatar
-        socialMediaPosition: "position-right", // social media bar position (position-left or position-right)
-        //for social media links, only update usernames
+        socialMediaPosition: "right", // social media bar position (left or right)
+        
         twitter: null, // social media usernames
         github: null,
         linkedin: null,
@@ -26,38 +26,29 @@ function render(variables = {}) {
   console.log("These are the current variables: ", variables); // print on the console
   // here we ask the logical questions to make decisions on how to build the html
   // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
-
-  let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
-  if (variables.includeCover === false) {
-    cover = "<div class='cover'></div>";
-  }
-
-  let location = "";
-  if (variables.city && variables.country) {
-    location = `${variables.city}, ${variables.country}`;
-  } else if (variables.city) {
-    location = variables.city;
-  } else if (variables.country) {
-    location = variables.country;
-  }
+  let cover = ⁠ <div class="cover"><img src="${variables.background}" /></div> ⁠;
+  if (variables.includeCover === false) cover = "<div class='cover'></div>";
 
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
-          <img src="${variables.avatarURL}" class="photo" />
-          <h1>
-          ${variables.name ? variables.name : ""}
-          ${variables.lastName ? variables.lastName : ""}</h1>
-          <h2>
-          ${variables.role ? variables.role : ""}
-          </h2>
-         <h3>${location}</h3>
+          <img src="${variables.avatarURL ||
+            "./default-avatar.png"}" class="photo" />
+          <h1>${variables.name || " "} ${variables.lastName || ""}</h1>
+          <h2>${variables.role || "no role defined"}</h2>
+          <h3>${variables.city || "unknown"}, ${variables.country ||
+    "unknown country"}</h3>
 
           <ul class="${variables.socialMediaPosition}">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
+  <li><a href="${variables.twitter ||
+    "#"}"   target="_blank" ><i class="fab fa-twitter"></i></a></li>
+  <li><a href="${variables.github ||
+    "#"}"    target="_blank"><i class="fab fa-github"></i></a></li>
+  <li><a href="${variables.linkedin ||
+    "#"}"  target="_blank" ><i class="fab fa-linkedin"></i></a></li>
+  <li><a href="${variables.instagram ||
+    "#"}" target="_blank" ><i class="fab fa-instagram"></i></a></li>
+</ul>
           </ul>
         </div>
     `;
@@ -74,8 +65,8 @@ window.onload = function() {
     background: "https://images.unsplash.com/photo-1511974035430-5de47d3b95da",
     // this is the url for the profile avatar
     avatarURL: "https://randomuser.me/api/portraits/women/42.jpg",
-    // social media bar position (position-left or position-right)
-    socialMediaPosition: "position-right",
+    // social media bar position (left or right)
+    socialMediaPosition: "position-left",
     // social media usernames
     twitter: null,
     github: null,
